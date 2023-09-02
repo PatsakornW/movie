@@ -20,7 +20,7 @@ function Treding() {
     return (
 
         <div className="flex justify-center mt-10">
-            <div className="w-[75%] h-52 md:h-[20rem] lg:h-[30rem] carousel rounded-box">
+            <div className="w-full overflow-hidden lg:w-[75%] h-52 md:h-[20rem] lg:h-[30rem] carousel rounded-box">
                 {treding.results?.slice(0, 5).map((item) => (
                     <div className="carousel-item w-full overflow-hidden relative " key={item.id}>
                         <img
