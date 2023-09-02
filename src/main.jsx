@@ -7,12 +7,14 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Home from './pages/home.jsx'
 import Favorites from './pages/favorites.jsx'
 import Detail from './pages/detail.jsx'
 import Test from './pages/test.jsx'
 import Watchlist from './pages/watchlist.jsx'
 import Searched from './pages/searched.jsx'
+import Tv from './pages/tv.jsx'
+import Movie from './pages/home.jsx'
+import Popular_p from './pages/popular_p.jsx'
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Movie />,
+      },
+      {
+        path: "/tv",
+        element: <Tv />,
+      },
+      {
+        path: "/popular",
+        element: <Popular_p />,
       },
       {
         path: "/favorites",

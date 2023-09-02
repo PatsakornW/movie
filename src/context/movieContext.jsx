@@ -8,37 +8,39 @@ function MovieContextProvider({ children }) {
     const [error, setError] = useState('');
     const [popular, setPopular] = useState([])
     const [page, setpage] = useState(1)
-    const [list, setlist] = useState([])
+    const [watch, setWatch] = useState([])
     const [favorites, setFavorites] = useState([])
+    const [treding, setTreding] = useState([])
+    const [video, setVideo] = useState([])
+    const [id,setId] = useState(null)
+    const [type, setType] = useState("movie")
+    const [detail, setDetail] = useState([])
+    const [isLoading,setIsLoading] = useState(true)
 
-    console.log(list);
-
+    console.log(watch);
 
 
     useEffect(() => {
-        async function getMovie() {
-            try {
-                const res = await fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=1`, {
-                    method: 'GET',
-                    headers: {
-                        accept: 'application/json',
-                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZTVhNTk3ZThhOGIzYjAxMDNmNTFiMjQ3ZGNlZGIwZSIsInN1YiI6IjYzZTBhNTJiY2QyMDQ2MDA4MWUyYjc3NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ilB2m8xDnx3sNpkSMxUlOrWb9EINrAekXfwV-3Ksowg'
-                    }
-                })
-                if (res.status === 200) {
-                    const data = await res.json()
-                    setMovie(data)
-                } else {
-                    setError(res)
-                }
-            } catch (error) {
-                setError(error);
-            }
-        }
-
         async function getPopular() {
             try {
-                const res = await fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, {
+                const res = await fetch(`https://api.themoviedb.org/3/${type}/popular?language=en-US&page=${page}`, {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZTVhNTk3ZThhOGIzYjAxMDNmNTFiMjQ3ZGNlZGIwZSIsInN1YiI6IjYzZTBhNTJiY2QyMDQ2MDA4MWUyYjc3NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ilB2m8xDnx3sNpkSMxUlOrWb9EINrAekXfwV-3Ksowg'
+                    }
+                })
+                    const data = await res.json()
+                    setPopular(data)
+                    setIsLoading(false)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function getTreding() {
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/trending/${type}/day?language=en-US`, {
                     method: 'GET',
                     headers: {
                         accept: 'application/json',
@@ -47,7 +49,7 @@ function MovieContextProvider({ children }) {
                 })
                 if (res.status === 200) {
                     const data = await res.json()
-                    setPopular(data)
+                    setTreding(data)
                 } else {
                     setError(res)
                 }
@@ -55,13 +57,53 @@ function MovieContextProvider({ children }) {
                 setError(error);
             }
         }
-        getPopular()
-        getMovie()
-    }, [page])
+        async function getVideo() {
+            try {
+                const video = await fetch(`https://api.themoviedb.org/3/${type}/${id}/videos`, {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZTVhNTk3ZThhOGIzYjAxMDNmNTFiMjQ3ZGNlZGIwZSIsInN1YiI6IjYzZTBhNTJiY2QyMDQ2MDA4MWUyYjc3NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ilB2m8xDnx3sNpkSMxUlOrWb9EINrAekXfwV-3Ksowg'
+                    }
+                })
 
-    function addList(detail) {
-        if (!list.includes(detail)) {
-            setlist([...list, detail]);
+                const data = await video.json();
+                setVideo(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function getDetail() {
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}?language=en-US`, {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZTVhNTk3ZThhOGIzYjAxMDNmNTFiMjQ3ZGNlZGIwZSIsInN1YiI6IjYzZTBhNTJiY2QyMDQ2MDA4MWUyYjc3NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ilB2m8xDnx3sNpkSMxUlOrWb9EINrAekXfwV-3Ksowg'
+                    }
+                });
+
+                const data = await res.json();
+                setDetail(data);
+                setIsLoading(false);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getDetail()
+        getVideo()
+        getTreding()
+        getPopular()
+    }, [page,id,type])
+
+
+
+
+    function addWatch(detail) {
+        if (!watch.includes(detail)) {
+            setWatch([...watch, detail]);
           } else {
             console.log("It's Added");
           }
@@ -76,7 +118,7 @@ function MovieContextProvider({ children }) {
     }
 
 
-    return <MovieContext.Provider value={{ movie, popular, page, setpage,setlist,list,addList,favorites,addFav}}>{children}</MovieContext.Provider>
+    return <MovieContext.Provider value={{treding,setId,video,type,setType,detail,video,isLoading,popular,page,setpage,addWatch,addFav,watch,favorites}}>{children}</MovieContext.Provider>
 
 
 }

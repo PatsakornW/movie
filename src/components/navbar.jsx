@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Sidebar from './sidebar'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
+import { MovieContext } from '../context/movieContext';
+
 
 function Navbar() {
   const [inputSearch, setinputSearch] = useState("")
   const navigate = useNavigate();
 
-  function handle_search(e){
+  function handle_search(e) {
     e.preventDefault();
     navigate(`/search/${inputSearch}`)
+    setpage(1)
   }
   return (
     <div className="drawer ">
@@ -24,38 +28,39 @@ function Navbar() {
           </div>
           <div className="flex px-0 md:px-2 mx-0 md:mx-2 font-semibold text-3xl ">
 
-            <div  className=' mx-0 md:mx-2 flex items-center'>
-              
+            <div className=' mx-0 md:mx-2 flex items-center'>
+
             </div>
 
           </div>
 
 
           <div className="flex-none">
-          <form onSubmit={handle_search}>
-            <div className=' relative '>
+            <form onSubmit={handle_search}>
+              <div className=' relative '>
                 <input
-                    type='text'
-                    className=' input w-full bg-base-100 pl-10 pr-3'
-                    placeholder=' Search...'
-                    value={inputSearch}
-                    onChange={(e)=> setinputSearch(e.target.value)}          
+                  type='text'
+                  className=' input w-full bg-base-100 pl-10 pr-3'
+                  placeholder=' Search...'
+                  value={inputSearch}
+                  onChange={(e) => setinputSearch(e.target.value)}
                 />
-            </div>
-
-
-        </form>
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaSearch />
+                </span>
+              </div>
+            </form>
           </div>
 
-      
-    
+
+
 
 
         </div>
       </div>
       <div className="drawer-side z-20">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-        <Sidebar/>
+        <Sidebar />
 
       </div>
     </div>

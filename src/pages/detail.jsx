@@ -8,59 +8,9 @@ import { MdOutlineFavorite, MdOutlineBookmark } from 'react-icons/md';
 
 
 function Detail() {
-    const { id } = useParams();
-    const { addList, addFav } = useContext(MovieContext);
+    const { detail, video, isLoading,addWatch,addFav } = useContext(MovieContext);
 
-
-    const [detail, setDetail] = useState([])
-    const [video, setVideo] = useState([])
-    const [isLoading, setIsLoading] = useState(true);
-
-
-    // console.log(video);
-
-    useEffect(() => {
-        async function getDetail() {
-            try {
-                const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, {
-                    method: 'GET',
-                    headers: {
-                        accept: 'application/json',
-                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZTVhNTk3ZThhOGIzYjAxMDNmNTFiMjQ3ZGNlZGIwZSIsInN1YiI6IjYzZTBhNTJiY2QyMDQ2MDA4MWUyYjc3NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ilB2m8xDnx3sNpkSMxUlOrWb9EINrAekXfwV-3Ksowg'
-                    }
-                })
-
-                const data = await res.json();
-                setDetail(data);
-                setIsLoading(false);
-
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        async function getVideo() {
-            try {
-                const video = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos`, {
-                    method: 'GET',
-                    headers: {
-                        accept: 'application/json',
-                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZTVhNTk3ZThhOGIzYjAxMDNmNTFiMjQ3ZGNlZGIwZSIsInN1YiI6IjYzZTBhNTJiY2QyMDQ2MDA4MWUyYjc3NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ilB2m8xDnx3sNpkSMxUlOrWb9EINrAekXfwV-3Ksowg'
-                    }
-                })
-
-                const data = await video.json();
-                setVideo(data);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getVideo();
-        getDetail();
-
-
-    }, []);
-
+    console.log(video);
     const filterVideo = video?.results?.filter((item) => {
         return item.name === "Official Trailer";
     });
@@ -77,15 +27,23 @@ function Detail() {
                 </div>
             ) : (
                 <>
-                    <div className='flex items-center justify-center col-span-2 lg:col-span-1 '>
-                        <img src={`https://image.tmdb.org/t/p/w500/${detail.poster_path}`} alt={detail.title} className=' rounded-box h-[30rem] w-3/4 md:w-1/2 lg:w-2/3 shadow-2xl ms-0 lg:ms-20' />
+                    <div className='flex items-start  justify-center col-span-2 lg:col-span-1 '>
+                        <img src={`https://image.tmdb.org/t/p/w500/${detail.poster_path}`} alt={detail.title} className=' rounded-box h-[30rem] w-3/4 md:w-1/2 lg:w-2/3 shadow-2xl ms-0 lg:ms-20' 
+                         onError={(e) => {
+                            e.target.src = 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg';
+                          }}/>
                     </div>
                     <div className='col-span-2 lg:col-span-1'>
-                        <div className='flex-col p-5 lg:p-20'>
-                            <p className='my-2 text-4xl font-bold'>{detail.title}</p>
+                        <div className='flex-col p-5 sm:p-0 '>
+                            <p className='my-2 text-4xl font-bold'>{detail.title || detail.name}</p>
                             <div className='my-2 flex gap-x-2'>
                                 <p >{detail.release_date}</p>
-                                <p>{Math.floor(detail.runtime / 60)}h {detail.runtime % 60}min</p>
+                                {detail.runtime && (
+                                    <p>{Math.floor(detail.runtime / 60)}h {detail.runtime % 60} min</p>
+                                )}
+                                {detail.number_of_seasons || detail.number_of_episodes ? (
+                                    <p>Season {detail.number_of_seasons} Episodes {detail.number_of_episodes} </p>
+                                ) : null}
 
                             </div>
                             {detail?.genres?.map((item) => (
@@ -94,7 +52,7 @@ function Detail() {
                             <p className='my-2'>{detail.overview}</p>
                             <div className='flex gap-2'>
                                 <button className="btn rounded-full btn-primary" onClick={() => window.my_modal_2.showModal()}><FaPlay className='text-white' /></button>
-                                <button className="btn rounded-full btn-primary" onClick={() => addList(detail)}>
+                                <button className="btn rounded-full btn-primary" onClick={() => addWatch(detail)}>
                                     <MdOutlineBookmark className='text-white h-4 w-4' />
                                 </button>
                                 <button className="btn rounded-full btn-primary" onClick={() => addFav(detail)}><MdOutlineFavorite className='text-white h-4 w-4' /></button>
@@ -124,8 +82,12 @@ function Detail() {
                 </>
 
 
-
             )}
+
+
+
+
+
         </div>
     )
 
