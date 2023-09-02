@@ -27,7 +27,7 @@ function Popular_p() {
                                 <button className="join-item btn btn-sm" onClick={() => setpage(page + 1)}>»</button>
                             </div>
                         </div>
-                        <div className='flex flex-wrap w-[75%] gap-4 justify-center'>
+                        <div className='flex flex-wrap w-full lg:w-[75%] gap-4 justify-center'>
                             {popular?.results?.map((item) => (
                                 <Card key={item.id} item={item}/>
                             ))}
