@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { RiMovie2Line, RiCompassDiscoverLine } from 'react-icons/ri';
+import { RiMovie2Line } from 'react-icons/ri';
 import { MdOutlineFavoriteBorder, MdOutlineBookmarkBorder, MdOutlineMovie, MdOutlineWhatshot } from 'react-icons/md';
 import { MovieContext } from '../context/movieContext';
-import { PiTelevision } from 'react-icons/pi';
+import { PiTelevision, PiStarBold } from 'react-icons/pi';
 
 
 
@@ -14,7 +14,7 @@ function Sidebar() {
     const { setType } = useContext(MovieContext);
 
     return (
-        <ul className="menu w-auto bg-base-100 h-full">
+        <ul className="menu w-auto lg:w-[12rem] bg-base-100 border-e-2 gap-4  h-full">
 
             <div className='flex text-center font-bold text-4xl mt-2 justify-center items-center'>
                 <p className='hidden lg:block'>M</p>
@@ -51,6 +51,15 @@ function Sidebar() {
                 }}>
                     <MdOutlineWhatshot className='h-5 w-5' />
                     <p className=' hidden lg:block '>Popular</p>
+                </Link>
+            </li>
+            <li>
+                <Link to={'/rated'} className={activeTab === "Top Rated" ? "font-medium " : "font-normal"} onClick={() => {
+                    setactiveTab("Top Rated")
+                    setType("movie")
+                }}>
+                    <PiStarBold className='h-5 w-5' />
+                    <p className=' hidden lg:block '>Top Rated</p>
                 </Link>
             </li>
             <li>

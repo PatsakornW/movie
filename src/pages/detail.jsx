@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useContext} from 'react'
 import { MovieContext } from '../context/movieContext';
 import { FaPlay } from 'react-icons/fa';
 import { MdOutlineFavorite, MdOutlineBookmark } from 'react-icons/md';
+import Cast from '../components/cast';
 
 
 
 
 function Detail() {
-    const { detail, video, isLoading,addWatch,addFav } = useContext(MovieContext);
+    const { detail, video, isLoading, addWatch, addFav,cast } = useContext(MovieContext);
 
-    console.log(video);
     const filterVideo = video?.results?.filter((item) => {
         return item.name === "Official Trailer";
     });
@@ -28,10 +27,10 @@ function Detail() {
             ) : (
                 <>
                     <div className='flex items-start  justify-center col-span-2 lg:col-span-1 '>
-                        <img src={`https://image.tmdb.org/t/p/w500/${detail.poster_path}`} alt={detail.title} className=' rounded-box h-[30rem] w-3/4 md:w-1/2 lg:w-2/3 shadow-2xl ms-0 lg:ms-20' 
-                         onError={(e) => {
-                            e.target.src = 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg';
-                          }}/>
+                        <img src={`https://image.tmdb.org/t/p/w500/${detail.poster_path}`} alt={detail.title} className=' rounded-box h-[30rem] w-3/4 md:w-1/2 lg:w-2/3 shadow-2xl ms-0 lg:ms-20'
+                            onError={(e) => {
+                                e.target.src = 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg';
+                            }} />
                     </div>
                     <div className='col-span-2 lg:col-span-1'>
                         <div className='flex-col p-5 sm:p-0 '>
@@ -42,7 +41,7 @@ function Detail() {
                                     <p>{Math.floor(detail.runtime / 60)}h {detail.runtime % 60} min</p>
                                 )}
                                 {detail.number_of_seasons || detail.number_of_episodes ? (
-                                    <p>Season {detail.number_of_seasons} Episodes {detail.number_of_episodes} </p>
+                                    <p> {detail.number_of_seasons} Season  {detail.number_of_episodes} Episodes</p>
                                 ) : null}
 
                             </div>
@@ -75,13 +74,19 @@ function Detail() {
                                 </form>
                             </dialog>
                         </div>
-
-
-
+                    </div>
+                    <div className='flex-col w-[80%]  my-10 mx-auto col-span-2'>
+                        <div className="flex justify-between">
+                            <p className='font-medium text-lg'>Top Billed Cast </p>
+                            <p className=' text-slate-500 hover:text-slate-600 cursor-pointer'>view all</p>
+                        </div>
+                        <div className="carousel   carousel-center w-full  py-4 space-x-4 rounded-box">
+                            {cast?.cast?.slice(0, 9).map((item) => (
+                                <Cast key={item.id} item={item} />
+                            ))}
+                        </div>
                     </div>
                 </>
-
-
             )}
 
 

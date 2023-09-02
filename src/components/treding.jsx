@@ -7,14 +7,11 @@ import { CgDetailsMore } from 'react-icons/cg';
 
 
 function Treding() {
-    const { treding, video, setId,setpage,page } = useContext(MovieContext);
+    const { treding, video, setId } = useContext(MovieContext);
     const filterVideo = video?.results?.filter((item) => {
         return item.name === "Official Trailer";
     });
 
-    useEffect(() => {
-      setpage(1)
-    }, [page])
     
 
     return (

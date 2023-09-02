@@ -1,13 +1,13 @@
-import React, { useContext} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MovieContext } from '../context/movieContext';
+import { Link } from 'react-router-dom';
 import Card from '../components/card';
 
-function Popular_p() {
-    const { isLoading, page, setpage, popular, type, setType } = useContext(MovieContext);
-    
+function Rated_p() {
+    const { isLoading, page, setpage, rated, type, setType,setId } = useContext(MovieContext);
 
-    return (
-        <div>
+  return (
+    <div>
             {isLoading ? (
                 <div className='flex  justify-center col-span-2 h-96'>
                     <span className="loading loading-spinner loading-lg"></span>
@@ -27,7 +27,7 @@ function Popular_p() {
                             </div>
                         </div>
                         <div className='flex flex-wrap w-full lg:w-[70%] gap-4 justify-center'>
-                            {popular?.results?.map((item) => (
+                            {rated?.results?.map((item) => (
                                 <Card key={item.id} item={item}/>
                             ))}
                         </div>
@@ -36,11 +36,7 @@ function Popular_p() {
 
             )}
         </div>
-
-
-    )
+  )
 }
 
-
-
-export default Popular_p
+export default Rated_p

@@ -15,6 +15,7 @@ import Searched from './pages/searched.jsx'
 import Tv from './pages/tv.jsx'
 import Movie from './pages/home.jsx'
 import Popular_p from './pages/popular_p.jsx'
+import Rated_p from './pages/rated_p.jsx'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/popular",
         element: <Popular_p />,
+      },
+      {
+        path: "/rated",
+        element: <Rated_p />,
       },
       {
         path: "/favorites",

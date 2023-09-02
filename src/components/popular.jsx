@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Card from './card';
 
 function Popular() {
-    const { popular, setId } = useContext(MovieContext);
+    const { popular } = useContext(MovieContext);
 
     return (
         <div className='flex justify-center  mt-10'>
