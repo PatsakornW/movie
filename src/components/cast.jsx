@@ -7,7 +7,7 @@ function Cast({ item }) {
             className="carousel-item rounded-box overflow-hidden shadow-xl"
 
         >
-            <div className="card w-36 h-52 lg:w-44 lg:h-full bg-base-100 ">
+            <div className="card w-36 h-full lg:w-full lg:h-full bg-base-100 ">
                 <img
                     src={`https://image.tmdb.org/t/p/w500/${item.profile_path}`}
                     alt={item.title}
