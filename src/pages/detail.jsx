@@ -78,7 +78,7 @@ function Detail() {
                     <div className='flex-col w-[80%]  my-10 mx-auto col-span-2'>
                         <div className="flex justify-between">
                             <p className='font-medium text-lg'>Top Billed Cast </p>
-                            <p className=' text-slate-500 hover:text-slate-600 cursor-pointer'>view all</p>
+                            
                         </div>
                         <div className="carousel   carousel-center w-full  py-4 space-x-4 rounded-box">
                             {cast?.cast?.slice(0, 9).map((item) => (

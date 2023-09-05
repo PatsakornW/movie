@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import Favorites from './pages/favorites.jsx'
 import Detail from './pages/detail.jsx'
-import Test from './pages/test.jsx'
 import Watchlist from './pages/watchlist.jsx'
 import Searched from './pages/searched.jsx'
 import Tv from './pages/tv.jsx'
@@ -53,10 +52,6 @@ const router = createBrowserRouter([
       {
         path: "/search/:searched",
         element: <Searched />,
-      },
-      {
-        path: "/test",
-        element: <Test />,
       },
     ],
   },
