@@ -12,7 +12,7 @@ function Rated() {
             <div className='flex-col w-[75%]'>
                 <div className='flex justify-between'>
                     <p className='font-medium text-lg'>Top Rated</p>
-                    <Link to={'/popular'} className=' text-slate-500 hover:text-slate-600 cursor-pointer'>view all</Link>
+                    <Link to={'/rated'} className=' text-slate-500 hover:text-slate-600 cursor-pointer'>view all</Link>
 
                 </div>
                 <div className="carousel   carousel-center w-full  py-4 space-x-4 rounded-box">
